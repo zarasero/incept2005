@@ -28,7 +28,7 @@ services:
     build: ./nginx
     image: nginx
     ports:
-      - "443:443"   # Уже есть для https
+      - "443:443"
     volumes:
       - wordpress:/var/www/html
     networks:

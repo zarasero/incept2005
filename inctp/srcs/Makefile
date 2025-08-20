@@ -1,13 +1,10 @@
-# Пути
-COMPOSE_FILE = ./requirements/docker-compose.yml
 
+COMPOSE_FILE = ./requirements/docker-compose.yml
 
 
 # Цвета (для ошибок)
 RED   = \e[1;91m
 RESET = \033[0m
-
-# --- Цели ---
 
 
 all: run
@@ -29,7 +26,6 @@ clean:
 	@docker network rm inception 2>/dev/null || true
 
 
-# Перезапуск: пересборка + запуск
 re: clean all
 
 .PHONY: run up clean re
