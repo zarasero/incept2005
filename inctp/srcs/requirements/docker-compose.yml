@@ -1,0 +1,60 @@
+version: '3.9'
+
+services:
+  mariadb:
+    build: ./mariadb
+    image: mariadb
+    env_file: .env
+    volumes:
+      - database:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
+
+  wordpress:
+    build: ./wordpress
+    image: wordpress
+    env_file: .env
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+    restart: always
+    # Порт пробрасывать не нужно, т.к. nginx будет работать как прокси
+
+  nginx:
+    build: ./nginx
+    image: nginx
+    ports:
+      - "443:443"   # Уже есть для https
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+    restart: always
+
+volumes:
+  wordpress:
+    driver: local
+    name: wordpress_vol
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/zserobia/data/wordpress
+
+  database:
+    driver: local
+    name: mariadb_vol
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/zserobia/data/mariadb 
+
+networks:
+  inception:
+    driver: bridge
+    name: inception
