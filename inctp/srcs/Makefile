@@ -21,8 +21,8 @@ up:
 
 clean:
 	docker-compose -f $(COMPOSE_FILE) down -v --rmi all --remove-orphans
-	rm -rf /home/zserobia/data/mariadb
-	rm -rf /home/zserobia/data/wordpress
+	sudo rm -rf /home/zserobia/data/mariadb
+	sudo rm -rf /home/zserobia/data/wordpress
 	@docker network rm inception 2>/dev/null || true
 
 
