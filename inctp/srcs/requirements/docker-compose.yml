@@ -4,6 +4,8 @@ services:
   mariadb:
     build: ./mariadb
     image: mariadb
+    ports:
+    - "3306:3306"
     env_file: .env
     volumes:
       - database:/var/lib/mysql
